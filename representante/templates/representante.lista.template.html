@@ -1,0 +1,120 @@
+{% extends 'base.template.html' %}
+{% load i18n %}
+{% block contenido %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="text-left">Listar</h3>
+        </div>
+
+        <div class="panel-body">
+            <div class="row table-responsive">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <table class="table table-striped table-hover table-bordered display dataTable blue-table" id="tabla" style="width:2250px;">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Cédula</th>
+                                <th>Teléfono</th>
+                                <th>Correo</th>
+                                <th>Frente</th>
+                                <th>Municipio</th>
+                                <th>Parroquia</th>
+                                <th>Operación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for frente in object_list %}
+                                <tr>
+                                <td> {{ frente.persona.nombre }} </td>
+                                <td> {{ frente.persona.apellido }} </td>
+                                <td> {{ frente.persona.cedula }} </td>
+                                <td> {{ frente.persona.telefono }} </td>
+                                <td> {{ frente.persona.correo }} </td>
+                                <td> {{ frente.get_nombre_display }} </td>
+                                {% if frente.municipio %}
+                                    <td> {{ frente.municipio }} </td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+                                {% if frente.parroquia %}
+                                    <td> {{ frente.parroquia }}, {{ frente.parroquia.municipio }} </td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+                                <td> <a href="#">Editar</a> | <a href="#">Eliminar</a> </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block extra_footer %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var tabla= $('#tabla').DataTable({
+                "language": {
+                    "sProcessing":     "Procesando...",
+	                "sLengthMenu":     "Mostrar _MENU_ registros",
+	                "sZeroRecords":    "No se encontraron resultados",
+	                "sEmptyTable":     "Ningún dato disponible en esta tabla",
+	                "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+	                "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+	                "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+	                "sInfoPostFix":    "",
+	                "sSearch":         "Buscar:",
+	                "sUrl":            "",
+	                "sInfoThousands":  ",",
+	                "sLoadingRecords": "Cargando...",
+	                "oPaginate": {
+		                "sFirst":    "Primero",
+		                "sLast":     "Último",
+		                "sNext":     "Siguiente",
+		                "sPrevious": "Anterior"
+	                },
+	                "oAria": {
+		                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+		                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+	                },
+                },
+                "autoWidth": false,
+                "columnDefs": [
+                    { "width": "250px", "targets": 0 },
+                    { "width": "250px", "targets": 1 },
+                    { "width": "250px", "targets": 2 },
+                    { "width": "250px", "targets": 3 },
+                    { "width": "250px", "targets": 4 },
+                    { "width": "250px", "targets": 5 },
+                    { "width": "250px", "targets": 6 },
+                    { "width": "250px", "targets": 7 },
+                    { "width": "250px", "targets": 8 },
+                ],
+            });
+
+            new $.fn.dataTable.Buttons(tabla, {
+            buttons: [
+                {
+                    extend: 'copyHtml5',
+                },
+                {
+                    extend: 'csvHtml5',
+                    fieldBoundary: '',
+                },
+                {
+                    extend: 'excelHtml5',
+                },
+                {
+                    extend: 'pdfHtml5',
+                },
+                {
+                    extend: 'print',
+                },
+              ],
+            });
+            tabla.buttons().container().appendTo(tabla.table().container());
+        });
+    </script>
+{% endblock %}
