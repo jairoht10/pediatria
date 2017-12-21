@@ -13,7 +13,7 @@ class Estado(models.Model):
 	nombre = models.CharField(max_length=50)
 
 	## Pais donde esta el estado
-	pais = models.ForeignKey(Pais)
+	pais = models.ForeignKey(Pais,on_delete=models.CASCADE)
 
 	def __str__(self):
 		return self.nombre
@@ -23,7 +23,7 @@ class Municipio(models.Model):
 	nombre = models.CharField(max_length=50)
 
 	## Estado donde esta el municipio
-	estado = models.ForeignKey(Estado)
+	estado = models.ForeignKey(Estado,on_delete=models.CASCADE)
 	def __str__(self):
 		return self.nombre
 
@@ -32,7 +32,7 @@ class Parroquia(models.Model):
 	nombre = models.CharField(max_length=50)
 
 	## Municipio donde esta la porroquia
-	municipio = models.ForeignKey(Municipio)
+	municipio = models.ForeignKey(Municipio,on_delete=models.CASCADE)
 	def __str__(self):
 		return self.nombre
 
@@ -41,6 +41,6 @@ class Ciudad(models.Model):
 	nombre = models.CharField(max_length=50)
 
 	## Estado donde esta la ciudad
-	estado = models.ForeignKey(Estado)
+	estado = models.ForeignKey(Estado,on_delete=models.CASCADE)
 	def __str__(self):
 		return self.nombre

@@ -47,5 +47,4 @@ class Representante(models.Model):
 
 #    parroquia = models.ForeignKey(Parroquia, null=True)
 
-    user = models.ForeignKey(User)
-
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
